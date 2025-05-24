@@ -1,66 +1,29 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { School } from 'lucide-react';
 
 const LDAPLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleLDAPLogin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    try {
-      const res = await fetch('http://localhost:5000/ldap-login', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        window.location.reload();
-      } else {
-        setError(data.error || 'LDAP login failed');
-      }
-    } catch (err) {
-      setError('Network error');
-    } finally {
-      setLoading(false);
-    }
+    // Handle login
   };
 
   return (
-    <form onSubmit={handleLDAPLogin} className="space-y-4">
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="LDAP Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        required
-        className="w-full px-3 py-2 border border-gray-300 focus:outline-none"
       />
       <input
         type="password"
         placeholder="LDAP Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        required
-        className="w-full px-3 py-2 border border-gray-300 focus:outline-none"
       />
-      <button 
-        type="submit" 
-        disabled={loading}
-        className="w-full py-2 bg-black text-white hover:bg-black/90 transition-colors"
-      >
-        Login with LDAP
-      </button>
-      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+      <button type="submit">Login with LDAP</button>
     </form>
   );
 };
@@ -69,85 +32,90 @@ const LoginPage = () => {
   const [method, setMethod] = useState('ldap');
 
   return (
-    <motion.div
-      className="min-h-screen bg-white flex flex-col"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="flex-1 flex flex-col">
-        <div className="border-b border-gray-300 py-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <School className="h-5 w-5" />
-              <span>IIT Madras NetAccess</span>
-            </div>
-            <a 
-              href="https://cc.iitm.ac.in"
-              className="text-blue-600 underline text-sm"
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Header */}
+      <div style={{ borderBottom: '1px solid #ccc', padding: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: '1200px', margin: '0 auto' }}>
+          <div>IIT Madras NetAccess</div>
+          <a href="https://cc.iitm.ac.in" style={{ color: 'blue', textDecoration: 'underline' }}>Computing Center</a>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Logo */}
+        <div style={{ marginBottom: '2rem' }}>
+          <svg width="64" height="64" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 3L1 9l11 6l9-4.91V17h2V9L12 3z"/>
+          </svg>
+        </div>
+
+        {/* Login Card */}
+        <div style={{ width: '100%', maxWidth: '400px', border: '1px solid #ccc' }}>
+          <h2 style={{ textAlign: 'center', padding: '1rem', margin: 0, borderBottom: '1px solid #ccc' }}>
+            Welcome to NetAccess
+          </h2>
+
+          {/* Tabs */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', borderBottom: '1px solid #ccc' }}>
+            <button 
+              onClick={() => setMethod('ldap')}
+              style={{ 
+                background: method === 'ldap' ? 'black' : 'white',
+                color: method === 'ldap' ? 'white' : 'black',
+                border: 'none',
+                borderRight: '1px solid #ccc',
+                padding: '0.5rem'
+              }}
             >
-              Computing Center
-            </a>
+              LDAP
+            </button>
+            <button 
+              onClick={() => setMethod('otp')}
+              style={{ 
+                background: method === 'otp' ? 'black' : 'white',
+                color: method === 'otp' ? 'white' : 'black',
+                border: 'none',
+                borderRight: '1px solid #ccc',
+                padding: '0.5rem'
+              }}
+            >
+              OTP
+            </button>
+            <button 
+              onClick={() => setMethod('google')}
+              style={{ 
+                background: method === 'google' ? 'black' : 'white',
+                color: method === 'google' ? 'white' : 'black',
+                border: 'none',
+                padding: '0.5rem'
+              }}
+            >
+              Google
+            </button>
           </div>
-        </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
-          <School className="h-16 w-16 mb-8" />
-
-          <div className="w-full max-w-md border border-gray-300">
-            <h2 className="text-xl text-center py-4 border-b border-gray-300">Welcome to NetAccess</h2>
-
-            <div className="grid grid-cols-3 border-b border-gray-300">
-              <button 
-                onClick={() => setMethod('ldap')} 
-                className={`py-2 text-sm ${method === 'ldap' ? 'bg-black text-white' : ''}`}
-              >
-                LDAP
-              </button>
-              <button 
-                onClick={() => setMethod('otp')} 
-                className={`py-2 text-sm border-l border-r border-gray-300 ${method === 'otp' ? 'bg-black text-white' : ''}`}
-              >
-                OTP
-              </button>
-              <button 
-                onClick={() => setMethod('google')} 
-                className={`py-2 text-sm ${method === 'google' ? 'bg-black text-white' : ''}`}
-              >
-                Google
-              </button>
-            </div>
-
-            <div className="p-4">
-              {method === 'ldap' && <LDAPLogin />}
-              {method === 'otp' && <div className="text-center text-gray-500">OTP login coming soon</div>}
-              {method === 'google' && <div className="text-center text-gray-500">Google login coming soon</div>}
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-300 py-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="text-sm text-gray-500 mb-2 md:mb-0">
-                © 2025 IIT Madras. All rights reserved.
-              </div>
-              <div className="flex space-x-6">
-                <a href="https://www.iitm.ac.in/terms" className="text-sm text-gray-500 hover:text-black">
-                  Terms of Use
-                </a>
-                <a href="https://www.iitm.ac.in/privacy" className="text-sm text-gray-500 hover:text-black">
-                  Privacy Policy
-                </a>
-                <a href="https://www.iitm.ac.in/contact" className="text-sm text-gray-500 hover:text-black">
-                  Contact
-                </a>
-              </div>
-            </div>
+          {/* Login Form */}
+          <div style={{ padding: '1rem' }}>
+            {method === 'ldap' && <LDAPLogin />}
+            {method === 'otp' && <div style={{ textAlign: 'center' }}>OTP login coming soon</div>}
+            {method === 'google' && <div style={{ textAlign: 'center' }}>Google login coming soon</div>}
           </div>
         </div>
       </div>
-    </motion.div>
+
+      {/* Footer */}
+      <div style={{ borderTop: '1px solid #ccc', padding: '1rem' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between' }}>
+          <div>© 2025 IIT Madras. All rights reserved.</div>
+          <div>
+            <a href="/terms" style={{ marginRight: '1rem' }}>Terms of Use</a>
+            <a href="/privacy" style={{ marginRight: '1rem' }}>Privacy Policy</a>
+            <a href="/contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
