@@ -144,3 +144,14 @@ body {
 .footer-link:hover {
   text-decoration: underline;
 }
+
+/* Additional styles for HomePage */
+select:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+
+label {
+  font-size: 0.875rem;
+  color: #374151;
+}
