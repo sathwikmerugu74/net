@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { School } from 'lucide-react';
 
 const LDAPLogin = () => {
   const [username, setUsername] = useState('');
@@ -10,20 +11,24 @@ const LDAPLogin = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="login-form">
       <input
         type="text"
+        className="input-field"
         placeholder="LDAP Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
         type="password"
+        className="input-field"
         placeholder="LDAP Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Login with LDAP</button>
+      <button type="submit" className="submit-button">
+        Login with LDAP
+      </button>
     </form>
   );
 };
@@ -32,89 +37,71 @@ const LoginPage = () => {
   const [method, setMethod] = useState('ldap');
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
-      <div style={{ borderBottom: '1px solid #ccc', padding: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: '1200px', margin: '0 auto' }}>
-          <div>IIT Madras NetAccess</div>
-          <a href="https://cc.iitm.ac.in" style={{ color: 'blue', textDecoration: 'underline' }}>Computing Center</a>
+    <div>
+      <nav className="navbar">
+        <div className="container navbar-content">
+          <div className="logo-text">
+            <School size={20} />
+            <span>IIT Madras NetAccess</span>
+          </div>
+          <a 
+            href="https://cc.iitm.ac.in" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="computing-center"
+          >
+            Computing Center
+          </a>
         </div>
-      </div>
+      </nav>
 
-      {/* Main Content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        {/* Logo */}
+      <main className="main-content">
         <div style={{ marginBottom: '2rem' }}>
-          <svg width="64" height="64" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M12 3L1 9l11 6l9-4.91V17h2V9L12 3z"/>
-          </svg>
+          <School size={48} />
         </div>
 
-        {/* Login Card */}
-        <div style={{ width: '100%', maxWidth: '400px', border: '1px solid #ccc' }}>
-          <h2 style={{ textAlign: 'center', padding: '1rem', margin: 0, borderBottom: '1px solid #ccc' }}>
-            Welcome to NetAccess
-          </h2>
+        <div className="login-card">
+          <div className="card-header">
+            <h2>Welcome to NetAccess</h2>
+          </div>
 
-          {/* Tabs */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', borderBottom: '1px solid #ccc' }}>
+          <div className="tabs">
             <button 
+              className={`tab ${method === 'ldap' ? 'active' : ''}`}
               onClick={() => setMethod('ldap')}
-              style={{ 
-                background: method === 'ldap' ? 'black' : 'white',
-                color: method === 'ldap' ? 'white' : 'black',
-                border: 'none',
-                borderRight: '1px solid #ccc',
-                padding: '0.5rem'
-              }}
             >
               LDAP
             </button>
             <button 
+              className={`tab ${method === 'otp' ? 'active' : ''}`}
               onClick={() => setMethod('otp')}
-              style={{ 
-                background: method === 'otp' ? 'black' : 'white',
-                color: method === 'otp' ? 'white' : 'black',
-                border: 'none',
-                borderRight: '1px solid #ccc',
-                padding: '0.5rem'
-              }}
             >
               OTP
             </button>
             <button 
+              className={`tab ${method === 'google' ? 'active' : ''}`}
               onClick={() => setMethod('google')}
-              style={{ 
-                background: method === 'google' ? 'black' : 'white',
-                color: method === 'google' ? 'white' : 'black',
-                border: 'none',
-                padding: '0.5rem'
-              }}
             >
               Google
             </button>
           </div>
 
-          {/* Login Form */}
-          <div style={{ padding: '1rem' }}>
-            {method === 'ldap' && <LDAPLogin />}
-            {method === 'otp' && <div style={{ textAlign: 'center' }}>OTP login coming soon</div>}
-            {method === 'google' && <div style={{ textAlign: 'center' }}>Google login coming soon</div>}
-          </div>
+          {method === 'ldap' && <LDAPLogin />}
+          {method === 'otp' && <div className="login-form">OTP login coming soon</div>}
+          {method === 'google' && <div className="login-form">Google login coming soon</div>}
         </div>
-      </div>
+      </main>
 
-      {/* Footer */}
-      <div style={{ borderTop: '1px solid #ccc', padding: '1rem' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between' }}>
+      <footer className="footer">
+        <div className="container footer-content">
           <div>© 2025 IIT Madras. All rights reserved.</div>
-          <div>
-            <a href="/terms" style={{ marginRight: '1rem' }}>Terms of Use</a>
-            <a href="/privacy" style={{ marginRight: '1rem' }}>Privacy Policy</a>
-            <a href="/contact">Contact</a>
+          <div className="footer-links">
+            <a href="/terms" className="footer-link">Terms of Use</a>
+            <a href="/privacy" className="footer-link">Privacy Policy</a>
+            <a href="/contact" className="footer-link">Contact</a>
           </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 };
