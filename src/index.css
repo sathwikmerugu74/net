@@ -1,18 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  body {
+    @apply bg-white;
+  }
 }
 
-html, body, #root {
-  height: 100%;
-  width: 100%;
-  font-family: 'Inter', sans-serif;
-  background-color: #fff; /* Or your new default theme */
-  color: #000;
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+
+  /* Navbar styles */
+  .navbar {
+    @apply border-b border-gray-200 py-4;
+  }
+
+  .navbar-content {
+    @apply flex justify-between items-center;
+  }
+
+  .logo-text {
+    @apply flex items-center gap-2 text-base text-black;
+  }
+
+  .computing-center {
+    @apply text-blue-600 underline text-sm;
+  }
+
+  /* Main content */
+  .main-content {
+    @apply min-h-[calc(100vh-120px)] flex flex-col items-center justify-center py-8 px-4 bg-white;
+  }
+
+  /* Login card */
+  .login-card {
+    @apply w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-sm;
+  }
+
+  .card-header {
+    @apply p-6 text-center border-b border-gray-200;
+  }
+
+  .card-header h2 {
+    @apply text-xl font-semibold text-black;
+  }
+
+  /* Tabs */
+  .tabs {
+    @apply grid grid-cols-3 border-b border-gray-200;
+  }
+
+  .tab {
+    @apply py-3 text-center bg-transparent border-none cursor-pointer text-sm text-gray-600;
+  }
+
+  .tab.active {
+    @apply bg-black text-white;
+  }
+
+  .tab:not(:last-child) {
+    @apply border-r border-gray-200;
+  }
+
+  /* Login form */
+  .login-form {
+    @apply p-6;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 mb-4 border border-gray-200 rounded-md text-sm text-black placeholder-gray-500;
+  }
+
+  .submit-button {
+    @apply w-full py-3 bg-black text-white border-none rounded-md cursor-pointer text-sm hover:bg-gray-800 transition-colors;
+  }
+
+  /* Footer */
+  .footer {
+    @apply border-t border-gray-200 py-4 text-gray-500 text-sm;
+  }
+
+  .footer-content {
+    @apply flex justify-between items-center;
+  }
+
+  .footer-links {
+    @apply flex gap-6;
+  }
+
+  .footer-link {
+    @apply text-gray-500 no-underline hover:underline;
+  }
 }
