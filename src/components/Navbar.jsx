@@ -1,28 +1,42 @@
 import React from "react";
-// import IITMlogo from "../assets/IITMlogo.svg";
+import IITMlogo from "../assets/IITMlogo.svg";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ loggedIn, setLoggedIn }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    navigate("/login");
+  };
+
   return (
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            {/* <img src={IITMlogo} alt="IIT Madras Logo" className="h-12 w-12" /> */}
-
-            <span className="text-lg font-semibold text-black">
+        {/* Use flex with items-center and justify-between on one row */}
+        <div className="flex justify-between items-center h-16">
+          {/* Logo + Title aligned left */}
+          <div className="flex items-center space-x-3 min-w-0">
+            <img
+              src={IITMlogo}
+              alt="IIT Madras Logo"
+              className="h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0"
+            />
+            <span className="text-lg sm:text-xl font-bold text-black whitespace-nowrap overflow-hidden text-ellipsis">
               IIT Madras NetAccess
             </span>
           </div>
-          <div className="flex items-center">
-            {/* <a
-              href="https://cc.iitm.ac.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-gray-600 hover:text-black transition-colors"
+
+          {/* Logout button aligned right */}
+          {loggedIn && (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition whitespace-nowrap"
             >
-              Computer Center
-            </a> */}
-          </div>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>
