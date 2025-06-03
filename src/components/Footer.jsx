@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="text-sm text-gray-500 mb-2 md:mb-0">
-            &copy; {new Date().getFullYear()} Copyright Computer Center, IIT Madras All Rights Reserved
+            &copy; {new Date().getFullYear()} IIT Madras. All rights reserved.
           </div>
           <div className="flex space-x-6">
             <a href="https://www.iitm.ac.in/terms" className="text-sm text-gray-500 hover:text-black">
