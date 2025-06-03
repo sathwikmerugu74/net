@@ -20,7 +20,7 @@ export default function App() {
 
             {/* Protected HomePage Route */}
             <Route
-              path="/home"
+              path="/netaccess"
               element={
                 isAuthenticated ? (
                   <HomePage onLogout={() => setIsAuthenticated(false)} />
@@ -35,7 +35,7 @@ export default function App() {
               path="/login"
               element={
                 isAuthenticated ? (
-                  <Navigate to="/home" replace />
+                  <Navigate to="/netaccess" replace />
                 ) : (
                   <div className="flex items-center justify-center min-h-full">
                     <LoginPage onLogin={() => setIsAuthenticated(true)} />

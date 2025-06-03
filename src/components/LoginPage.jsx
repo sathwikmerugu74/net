@@ -140,7 +140,7 @@ const LoginPage = ({ onLogin }) => {
 
         {/* Tabs */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6">
-          {["ldap", "otp", "google"].map((tab) => (
+          {["ldap"].map((tab) => (
             <button
               key={tab}
               onClick={() => setMethod(tab)}
@@ -157,14 +157,14 @@ const LoginPage = ({ onLogin }) => {
 
         {/* Login Content */}
         {method === "ldap" && <LDAPLogin onLogin={onLogin} />}
-        {method === "otp" && (
+        {/* {method === "otp" && (
           <div className="text-center text-gray-500">OTP login coming soon</div>
-        )}
-        {method === "google" && (
+        )} */}
+        {/* {method === "google" && (
           <div className="text-center text-gray-500">
             Google login coming soon
           </div>
-        )}
+        )} */}
       </motion.div>
     </motion.div>
   );
