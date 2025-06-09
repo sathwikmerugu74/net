@@ -190,7 +190,9 @@ const MobileHamburgerMenu: React.FC<{
                       transition={{ delay: index * 0.1 }}
                     >
                       <div className="flex items-center gap-3 mb-3">
-                        <div className={`w-10 h-10 ${doc.color} rounded-lg flex items-center justify-center`}>
+                        <div
+                          className={`w-10 h-10 ${doc.color} rounded-lg flex items-center justify-center`}
+                        >
                           <IconComponent className="w-5 h-5 text-white" />
                         </div>
                         <div className="flex-1">
@@ -199,11 +201,11 @@ const MobileHamburgerMenu: React.FC<{
                           </h4>
                         </div>
                       </div>
-                      
+
                       <p className="text-gray-600 text-xs mb-3">
                         {doc.description}
                       </p>
-                      
+
                       <button
                         onClick={() => handleDownload(doc.url, doc.title)}
                         className={`w-full ${doc.color} text-white py-2 px-3 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-lg`}
@@ -269,22 +271,22 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
       description: "Complete guide to connect to IITM WiFi network",
       url: "https://cc.iitm.ac.in/files/iitm-wifi.pdf",
       icon: Wifi,
-      color: "bg-blue-500 hover:bg-blue-600"
+      color: "bg-blue-500 hover:bg-blue-600",
     },
     {
-      title: "Wireless Router Configuration", 
+      title: "Wireless Router Configuration",
       description: "Instructions for configuring your wireless router",
       url: "https://cc.iitm.ac.in/network/wirelessrouterconfiguration.html",
       icon: Router,
-      color: "bg-purple-500 hover:bg-purple-600"
+      color: "bg-purple-500 hover:bg-purple-600",
     },
     {
       title: "LAN Connection Setup",
       description: "Step-by-step guide for LAN connection setup",
-      url: "https://cc.iitm.ac.in/network/instructiontoconnectlan.html", 
+      url: "https://cc.iitm.ac.in/network/instructiontoconnectlan.html",
       icon: Cable,
-      color: "bg-green-500 hover:bg-green-600"
-    }
+      color: "bg-green-500 hover:bg-green-600",
+    },
   ];
 
   const isPersonalIp = (ip: string): boolean => {
@@ -303,16 +305,18 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
     }
   };
 
-  const handleApprove = async () => {
-    const expiry = getExpiryDate();
-    const newDevice = {
-      ip: clientInfo.ip,
-      mac: clientInfo.mac,
-      expiry,
-      status: true,
-    };
+ const handleApprove = async () => {
+  const expiry = getExpiryDate();
+  const newDevice = {
+    ip: clientInfo.ip,
+    mac: clientInfo.mac,
+    expiry,
+    status: true,
+  };
 
     setApproved(true);
+    // setSharedDevices((prev) => [...prev, newDevice]);
+
     if (isPersonalIp(clientInfo.ip)) {
       setApprovedDevices((prev) => [...prev, newDevice]);
     } else {
@@ -409,7 +413,7 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
   };
 
   const handleDownload = (url: string, title: string) => {
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   const formatDate = (dateString: string) => {
@@ -479,7 +483,7 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
               <h3 className="text-lg font-bold text-gray-800 mb-4">
                 Network Setup Documentation
               </h3>
-              
+
               <div className="space-y-3">
                 {downloadDocuments.map((doc, index) => {
                   const IconComponent = doc.icon;
@@ -492,10 +496,12 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
                       transition={{ delay: 0.3 + index * 0.1 }}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 ${doc.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                        <div
+                          className={`w-10 h-10 ${doc.color} rounded-lg flex items-center justify-center flex-shrink-0`}
+                        >
                           <IconComponent className="w-5 h-5 text-white" />
                         </div>
-                        
+
                         <div className="flex-1 min-w-0">
                           <h4 className="font-semibold text-gray-800 text-sm truncate">
                             {doc.title}
@@ -504,7 +510,7 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
                             {doc.description}
                           </p>
                         </div>
-                        
+
                         <button
                           onClick={() => handleDownload(doc.url, doc.title)}
                           className="text-gray-500 hover:text-gray-700 transition-colors flex-shrink-0"
@@ -545,68 +551,66 @@ const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
                 handleApprove={handleApprove}
               />
             </div>
-             <h1 className="text-2xl font-bold text-black mb-4">
-    Device Management
-  </h1>
-{/* Shared/Public Devices FIRST */}
-<motion.div
-  className="bg-white rounded-lg shadow-md p-6"
-  initial={{ y: 20, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ delay: 0.3 }}
->
-  {/* <h1 className="text-2xl font-bold text-black mb-4">
+            <h1 className="text-2xl font-bold text-black mb-4">
+              Device Management
+            </h1>
+            {/* Shared/Public Devices FIRST */}
+            <motion.div
+              className="bg-white rounded-lg shadow-md p-6"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              {/* <h1 className="text-2xl font-bold text-black mb-4">
     Device Management
   </h1> */}
-  <h2 className="text-xl font-bold mb-6">Shared/Public Devices</h2>
+              <h2 className="text-xl font-bold mb-6">Shared/Public Devices</h2>
 
-  {sharedDevices.length === 0 ? (
-    <div className="text-center py-8 text-gray-500">
-      <Monitor className="mx-auto h-12 w-12 text-gray-400 mb-3" />
-      <p>No shared devices approved yet</p>
-    </div>
-  ) : (
-    <DeviceList
-      devices={sharedDevices}
-      onRevoke={confirmDeviceRemoval}
-      formatDate={formatDate}
-    />
-  )}
-</motion.div>
+              {sharedDevices.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <Monitor className="mx-auto h-12 w-12 text-gray-400 mb-3" />
+                  <p>No shared devices approved yet</p>
+                </div>
+              ) : (
+                <DeviceList
+                  devices={sharedDevices}
+                  onRevoke={confirmDeviceRemoval}
+                  formatDate={formatDate}
+                />
+              )}
+            </motion.div>
 
-{/* Personal Devices SECOND */}
-<motion.div
-  className="bg-white rounded-lg shadow-md p-6"
-  initial={{ y: 20, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ delay: 0.4 }}
->
-  
-  <div className="flex justify-between items-center mb-6">
-    <h2 className="text-xl font-bold">Personal Devices</h2>
-    <button
-      onClick={() => setShowPersonalForm(true)}
-      className="text-sm border border-black text-black px-3 py-1.5 rounded-md flex items-center gap-2 hover:bg-gray-50 transition-colors"
-    >
-      <PlusCircle size={16} />
-      <span>Add Device</span>
-    </button>
-  </div>
+            {/* Personal Devices SECOND */}
+            <motion.div
+              className="bg-white rounded-lg shadow-md p-6"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold">Personal Devices</h2>
+                <button
+                  onClick={() => setShowPersonalForm(true)}
+                  className="text-sm border border-black text-black px-3 py-1.5 rounded-md flex items-center gap-2 hover:bg-gray-50 transition-colors"
+                >
+                  <PlusCircle size={16} />
+                  <span>Add Device</span>
+                </button>
+              </div>
 
-  {approvedDevices.length === 0 ? (
-    <div className="text-center py-8 text-gray-500">
-      <Monitor className="mx-auto h-12 w-12 text-gray-400 mb-3" />
-      <p>No personal devices added yet</p>
-    </div>
-  ) : (
-    <DeviceList
-      devices={approvedDevices}
-      onRevoke={confirmDeviceRemoval}
-      formatDate={formatDate}
-    />
-  )}
-</motion.div>
-
+              {approvedDevices.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <Monitor className="mx-auto h-12 w-12 text-gray-400 mb-3" />
+                  <p>No personal devices added yet</p>
+                </div>
+              ) : (
+                <DeviceList
+                  devices={approvedDevices}
+                  onRevoke={confirmDeviceRemoval}
+                  formatDate={formatDate}
+                />
+              )}
+            </motion.div>
           </div>
 
           {/* Right Column - Network Details (Hidden on Mobile) */}
